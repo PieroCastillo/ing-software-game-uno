@@ -1,4 +1,6 @@
 import pygame
+from viewBase import viewBase
+from startView import startView
 
 pygame.init()
 
@@ -8,11 +10,8 @@ screen = pygame.display.set_mode((h, w))
 clock = pygame.time.Clock()
 running = True
 
-logoImg = pygame.transform.scale_by(pygame.image.load("assets/UNO_Logo.svg.png").convert(), 0.5)
-# rectlogoImg = logoImg.get_rect()
-# rectlogoImg.center = (h // 2, w // 2)
-# rectlogoImg.size = (h // 4, w // 4)
-# logoImg.set_rect(rectlogoImg)
+currentView: viewBase = startView()
+
 
 while running:
     # poll for events
@@ -21,18 +20,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
+    # Renderiza la ventana de inicio acá
     screen.fill("black")
+    
+    currentView.render(screen)
 
-    imgCenter = logoImg.get_rect()
-    imgCenter.center = screen.get_rect().center
-
-    screen.blit(logoImg, imgCenter)
-
-    # RENDER YOUR GAME HERE
-
-
-    # flip() the display to put your work on screen
     pygame.display.flip()
 
     clock.tick(60)  # limits FPS to 60
